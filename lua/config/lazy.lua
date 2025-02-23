@@ -23,6 +23,15 @@ vim.opt.runtimepath:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "Format buffer" })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function()
+    vim.lsp.buf.format({ async = false })
+  end,
+})
+
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
@@ -34,3 +43,4 @@ require("lazy").setup({
 		notify = false, -- get a notification when changes are found
 	},
 })
+
